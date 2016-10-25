@@ -1,18 +1,18 @@
 {
-    "name": "culture-pn-psu/yii2-personnel",
-    "description": "Yii 2 for Personnel",
+    "name": "culture-pn-psu/yii2-development",
+    "description": "Yii 2 for Personnel Development",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
     "license": "GPL-3.0",
     "minimum-stability": "stable",
     "support": {
-        "source": "https://github.com/culture-pn-psu/yii2-personnel.git",
-        "issues": "https://github.com/culture-pn-psu/yii2-personnel/issues"
+        "source": "https://github.com/culture-pn-psu/yii2-development.git",
+        "issues": "https://github.com/culture-pn-psu/yii2-development/issues"
     },
     "authors": [
         {
-            "name": "Anda Technology",
-            "email": "kuakling@gmail.com",
+            "name": "Ahamad Jehdu",
+            "email": "ahamad.j@psu.ac.th",
             "role" : "Developer"
         }
     ],
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "culturePnPsu\\personnel\\": ""
+            "culturePnPsu\\development\\": ""
         }
     },
     "extra": {
