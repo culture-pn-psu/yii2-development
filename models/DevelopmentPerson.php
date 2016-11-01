@@ -34,11 +34,12 @@ class DevelopmentPerson extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'dev_project_id', 'dev_activity_char_id'], 'required'],
+            [['user_id', 'dev_project_id'], 'required'],
             [['user_id', 'dev_project_id', 'dev_activity_char_id','explodeBy'], 'integer'],
             [['detail'], 'string'],
             [['start', 'end'], 'string', 'max' => 45],
             [['dev_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => DevelopmentProject::className(), 'targetAttribute' => ['dev_project_id' => 'id']],            
+            //['dev_activity_char_id', 'default', 'value' => 10],            
         ];
     }
 

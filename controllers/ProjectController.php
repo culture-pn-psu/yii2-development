@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use culturePnPsu\development\models\DevelopmentPerson;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * ProjectController implements the CRUD actions for DevelopmentProject model.
@@ -66,15 +67,11 @@ class ProjectController extends Controller {
         $model = new DevelopmentProject();
         $session = Yii::$app->session;
 
-
-
         if ($model->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
 
             if ($model->save()) {
-
                 $this->addPerson($model, $post);
-
 
                 $session->destroy('dev_project');
                 return $this->redirect(['update', 'id' => $model->id]);
@@ -83,7 +80,6 @@ class ProjectController extends Controller {
             return $this->render('create', [
                         'model' => $model,
                         'person' => $this->bindPerson($model, $mode, $user_id),
-                            //'selectedPerson' => $session['dev_project']['new']
             ]);
         }
     }
@@ -115,6 +111,14 @@ class ProjectController extends Controller {
         ]);
     }
 
+    /**
+     * 
+     * @param type $model
+     * @param type $mode
+     * @param type $user_id
+     * @param type $id
+     * @return ArrayDataProvider
+     */
     public function bindPerson($model, $mode = null, $user_id = null, $id = null) {
         $session = Yii::$app->session;
         $id = $model->isNewRecord ? 'new' : $id;
@@ -123,17 +127,14 @@ class ProjectController extends Controller {
 //            print_r($session['dev_project']);
 //            echo "</pre><hr/>";
 //            exit();
+//            
+        # if have not this session
         if (!$session->has('dev_project')) {
             $session->set('dev_project', [$id => []]);
         }
-        if (empty($session['dev_project'][$id])) {
 
-            //$session->set('dev_project', [$id => []]);
-            //$modelPerson = $model->developmentPeople ? $model->developmentPeople : [new DevelopmentPerson];
-//            echo "<pre>";
-//            print_r($modelPerson);
-//            echo "</pre><hr/>";
-
+        # if have not key $id
+        if (!ArrayHelper::keyExists($id,$session['dev_project'])) {
             $newPersons = [];
             if ($id != 'new') {
                 $modelPerson = DevelopmentPerson::find()->where(['dev_project_id' => $id])->orderBy(['user_id' => SORT_ASC])->all();
@@ -161,14 +162,7 @@ class ProjectController extends Controller {
                 }
             }
 
-            //exit();
-            //$session->destroy('dev_project');
             $session->set('dev_project', [$id => $newPersons]);
-
-//            echo "<pre>";
-//            print_r($newPersons);
-//            echo "</pre><hr/>";
-//            exit();
         }
 //        echo "<pre>";
 //        print_r($session['dev_project']);
@@ -176,16 +170,8 @@ class ProjectController extends Controller {
 //        exit();
 
 
-
-
-        if (isset($mode) && $mode == 'add') {
-            $add = new DevelopmentPerson();
+        if (isset($mode) && $mode == 'add') { # Event mode Add person
             $person = \culturePnPsu\user\models\Profile::findOne(['user_id' => $user_id]);
-            $add->dev_project_id = $id;
-            $add->user_id = $user_id;
-            $add->fullname = $person->fullname;
-            //$add->save(false);
-
             $test = $session['dev_project'];
             $test[$id][$user_id] = [
                 'user_id' => $user_id,
@@ -197,20 +183,16 @@ class ProjectController extends Controller {
             ];
             //$session->destroy('dev_project');
             $session->set('dev_project', $test);
-        } elseif (isset($mode) && $mode == 'del') {
+        } elseif (isset($mode) && $mode == 'del') { # Event mode delete person
             $del = $session['dev_project'];
             unset($del[$id][$user_id]);
-//            echo "<pre>";
-//            print_r($del);
-//            echo "</pre><hr/>";
-            //$session->destroy('dev_project');
             $session->set('dev_project', $del);
         } elseif (isset($mode) && $mode == 'clear') {
             //$session->destroy('dev_project');
         }
 
 
-
+        # Get Person All
         $person = \culturePnPsu\user\models\Profile::find()->orderBy('user_id')->all();
         $resPerson = [];
         foreach ($person as $data) {
@@ -221,8 +203,8 @@ class ProjectController extends Controller {
                 'selected' => false
             ];
         }
-//        print_r($resPerson);
-//        exit();
+
+        # Check person selected
         $person = $resPerson;
         $modelPerson = $session['dev_project'][$id];
         foreach ($modelPerson as $user_id => $data) {
@@ -233,16 +215,22 @@ class ProjectController extends Controller {
         $person = new ArrayDataProvider([
             'allModels' => $person,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 8,
             ],
         ]);
         return $person;
     }
 
+    /**
+     * 
+     * @param type $model
+     * @param type $post
+     */
     public function addPerson($model, $post) {
         DevelopmentPerson::deleteAll(['dev_project_id' => $model->id]);
         if ($post['DevelopmentPerson'])
             foreach ($post['DevelopmentPerson'] as $devPerson) {
+                #Check null of dev_activity_char_id
                 if ($devPerson['dev_activity_char_id']) {
                     foreach ($devPerson['dev_activity_char_id'] as $devChar) {
                         $modelDevPerson = new DevelopmentPerson();
@@ -277,21 +265,15 @@ class ProjectController extends Controller {
         $model = $this->findModel($id);
         $session = Yii::$app->session;
 
-
-
         if ($model->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
 
-            //echo "<pre>";
-            //print_r($post['DevelopmentPerson']);
-            //exit();
 
             if ($model->save()) {
 
                 $this->addPerson($model, $post);
 
                 $session->destroy('dev_project');
-                //exit();
                 //return $this->refresh();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -300,10 +282,7 @@ class ProjectController extends Controller {
 
         return $this->render('update', [
                     'model' => $model,
-                    //'modelPerson' => $modelPerson,
-                    //'dataPerson' => $dataPerson,
                     'person' => $this->bindPerson($model, $mode, $user_id, $id),
-                        //'selectedPerson' => $session['dev_project'][$id]
         ]);
     }
 
