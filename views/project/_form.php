@@ -9,7 +9,6 @@ use kartik\widgets\DatePicker;
 use kartik\widgets\Typeahead;
 use culturePnPsu\development\models\DevelopmentProject;
 use kartik\grid\GridView;
-use yii\grid\GridView;
 use culturePnPsu\development\models\DevelopmentPerson;
 use culturePnPsu\development\models\DevelopmentActivityChar;
 use yii\widgets\Pjax;
@@ -32,14 +31,14 @@ use yii\bootstrap\Modal;
 
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'title', ['class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'title', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
-<?= $form->field($model, 'title', ['showLabels' => false])->textInput(); ?>
+            <?= $form->field($model, 'title', ['showLabels' => false])->textInput(); ?>
         </div>
     </div>
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'start', ['label' => '', 'class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'start', ['label' => '', 'class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
             <?php
             $layout3 = <<< HTML
@@ -72,7 +71,7 @@ HTML;
 
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'place', ['class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'place', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
             <?=
             $form->field($model, 'place', ['showLabels' => false])->widget(Typeahead::classname(), [
@@ -91,7 +90,7 @@ HTML;
 
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'responsible_agency', ['class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'responsible_agency', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
             <?=
             $form->field($model, 'responsible_agency', ['showLabels' => false])->widget(Typeahead::classname(), [
@@ -110,7 +109,7 @@ HTML;
 
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'isin_agency', ['class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'isin_agency', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
             <?=
             $form->field($model, 'isin_agency', ['showLabels' => false])->radioList(DevelopmentProject::getItemIsinAgency());
@@ -119,7 +118,7 @@ HTML;
     </div>
 
     <div class="form-group">
-            <?= Html::activeLabel($model, 'budget_status', ['class' => 'col-sm-2 control-label']) ?>
+        <?= Html::activeLabel($model, 'budget_status', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">
             <?=
             $form->field($model, 'budget_status', ['showLabels' => false])->radioList(DevelopmentProject::getItemBudgetStatus());
@@ -132,27 +131,24 @@ HTML;
         <div class="col-sm-10 col-sm-offset-2">
             <?= $form->field($model, 'budget')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'budget_revenue')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'budget_revenue')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
     <div class="form-group">
-
-        <div class="col-sm-12">       
-            <?php //Pjax::begin(['id' => 'pjax_grid_person', 'enablePushState' => false]) ?>
+        <?= Html::activeLabel(new DevelopmentPerson, 'user_id', ['class' => 'col-sm-2 control-label']) ?>
+        <div class="col-sm-10">       
+            <?php Pjax::begin(['id' => 'pjax_grid_person', 'enablePushState' => false]) ?>
             <?=
             GridView::widget([
                 'dataProvider' => $dataPerson,
                 'summary' => '',
-                //'pjax'=>true,
                 'columns' => [
                         ['class' => 'kartik\grid\SerialColumn'],
                         [
                         'attribute' => 'user_id',
-                        'content' => function($model) {
-                            return $model['fullname'];
-                        },
-                        //'format' => 'html',
+                        'value' => 'user.fullname',
+                        'format' => 'html',
                         'contentOptions' => ['nowrap' => 'nowrap'],
                     ],
                         [
@@ -161,10 +157,8 @@ HTML;
                         //'value' => 'devChar.title',
                         'content' => function($model) {
                             return Select2::widget([
-                                        //'model'=>$model,
-                                        //'attribute' => $model->dev_activity_char_id,
-                                        'name' => "dev_activity_char_id[{$model['user_id']}]",
-                                        'value' => $model['dev_activity_char_id'],
+                                        'name' => 'dev_activity_char_id',
+                                        'value' => [$model->dev_activity_char_id],
                                         'data' => DevelopmentActivityChar::getList(),
                                         'options' => ['placeholder' => 'เลือก..', 'multiple' => true],
                                         'pluginOptions' => [
@@ -172,7 +166,7 @@ HTML;
                                         ],
                             ]);
                         },
-                        'headerOptions' => ['nowrap' => 'nowrap', 'width' => '200'],
+                        'headerOptions' => ['nowrap' => 'nowrap'],
                         'contentOptions' => ['nowrap' => 'nowrap']
                     ],
                         [
@@ -180,10 +174,10 @@ HTML;
                         'content' => function($model) {
                             return DatePicker::widget([
                                         'name' => 'start',
-                                        'value' => $model['start'],
+                                        'value' => $model->start,
                                         'type' => DatePicker::TYPE_RANGE,
                                         'name2' => 'end',
-                                        'value2' => $model['end'],
+                                        'value2' => $model->end,
                                         //'layout' => $layout3,
                                         'pluginOptions' => [
                                             'todayHighlight' => true,
@@ -198,14 +192,14 @@ HTML;
                         [
                         'attribute' => 'detail',
                         'content' => function($model) {
-                            return yii\bootstrap\Html::textInput('detail');
+                            return Html::textInput('detail');
                         }
                     ,
                     ],
                         [
                         'label' => 'ลบ',
                         'content' => function($model) {
-                            return Html::a('ลบ', ['update', 'id' => $model['dev_project_id'], 'mode' => 'del', 'user_id' => $model['user_id']], ['class' => 'btn btn-xs btn-warning']);
+                            return Html::a('ลบ',['update', 'id' => $model->dev_project_id, 'mode' => 'del', 'user_id' => $model->user_id], ['class' => 'btn btn-xs btn-warning']);
                         }
                     ,
                     ],
@@ -228,22 +222,22 @@ HTML;
                 ],
                 'panel' => [
                     'type' => 'default',
-                    'heading' => Html::activeLabel(new DevelopmentPerson, 'user_id')
+                    'heading' => false
                 ],
             ])
             ?>
-<?php //Pjax::end(); ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'สร้าง') : Yii::t('app', 'บันทึก'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'สร้าง') : Yii::t('app', 'บันทึก'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>
 
@@ -261,7 +255,7 @@ Modal::begin([
 //        'label' => '<i class="fa fa-picture-o" aria-hidden="true"></i>',
 //        'class' => 'btn btn-default btn-change-photo'
 //    ],
-//'footer' => Html::submitButton('<i class="fa fa-check-circle-o" aria-hidden="true"></i> Update', ['class' => 'btn btn-primary']),
+        //'footer' => Html::submitButton('<i class="fa fa-check-circle-o" aria-hidden="true"></i> Update', ['class' => 'btn btn-primary']),
 ]);
 
 //$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'data-pjax' => true]]);
@@ -279,7 +273,7 @@ echo yii\grid\GridView::widget([
 //print_r($model);
 //exit();
                 $title = $model['selected'] ? 'เลือกแล้ว' : 'เลือก';
-//$link = $model['selected'] ? ['update', 'id' => $model['id'], 'mode' => 'del', 'user_id' => $model["user_id"]] : ['update', 'id' => $mode['id'], 'mode' => 'add', 'user_id' => $model["user_id"]];
+                //$link = $model['selected'] ? ['update', 'id' => $model['id'], 'mode' => 'del', 'user_id' => $model["user_id"]] : ['update', 'id' => $mode['id'], 'mode' => 'add', 'user_id' => $model["user_id"]];
                 $mode = $model['selected'] ? 'del' : 'add';
                 $class = $model['selected'] ? 'btn btn-warning' : 'btn btn-success';
 
@@ -296,7 +290,7 @@ Pjax::end();
 //print_r($person);
 //exit();
 $this->registerJs(
-        '$("document").ready(function(){ 
+'$("document").ready(function(){ 
     
     $("#pjax_add_person").on("pjax:end", function() {
         $.pjax.reload({container:"#pjax_grid_person"});  //Reload GridView
@@ -311,5 +305,6 @@ $this->registerJs(
 
 
 });'
-        , yii\web\View::POS_END);
+, yii\web\View::POS_END);
+
 ?>
