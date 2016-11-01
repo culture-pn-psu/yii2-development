@@ -130,11 +130,11 @@ class ProjectController extends Controller {
 //            
         # if have not this session
         if (!$session->has('dev_project')) {
-            $session->set('dev_project', [$id => []]);
+            $session->set('dev_project', []);
         }
 
         # if have not key $id
-        if (!ArrayHelper::keyExists($id,$session['dev_project'])) {
+        if (!ArrayHelper::keyExists($id, $session['dev_project'])) {
             $newPersons = [];
             if ($id != 'new') {
                 $modelPerson = DevelopmentPerson::find()->where(['dev_project_id' => $id])->orderBy(['user_id' => SORT_ASC])->all();
@@ -163,12 +163,13 @@ class ProjectController extends Controller {
             }
 
             $session->set('dev_project', [$id => $newPersons]);
+             
         }
-//        echo "<pre>";
+       
+//echo "<pre>";
 //        print_r($session['dev_project']);
 //        echo "</pre><hr/>";
 //        exit();
-
 
         if (isset($mode) && $mode == 'add') { # Event mode Add person
             $person = \culturePnPsu\user\models\Profile::findOne(['user_id' => $user_id]);
@@ -227,8 +228,12 @@ class ProjectController extends Controller {
      * @param type $post
      */
     public function addPerson($model, $post) {
+        if($model->id)
         DevelopmentPerson::deleteAll(['dev_project_id' => $model->id]);
-        if ($post['DevelopmentPerson'])
+        echo "<pre>";
+        print_r($post['DevelopmentPerson']);
+        //exit();
+        if ($post['DevelopmentPerson']) {
             foreach ($post['DevelopmentPerson'] as $devPerson) {
                 #Check null of dev_activity_char_id
                 if ($devPerson['dev_activity_char_id']) {
@@ -253,6 +258,7 @@ class ProjectController extends Controller {
                     $modelDevPerson->save(false);
                 }
             }
+        }
     }
 
     /**
