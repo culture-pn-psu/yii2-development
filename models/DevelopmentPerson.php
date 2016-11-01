@@ -76,6 +76,9 @@ class DevelopmentPerson extends \yii\db\ActiveRecord
         return $this->hasOne(DevelopmentActivityChar::className(), ['id' => 'dev_activity_char_id']);
     }
     #############################
+    public $fullname;
+    public $char;
+    
     public static function itemsAlias($key) {
         $items = [
             'status' => [

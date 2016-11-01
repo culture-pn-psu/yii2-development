@@ -17,6 +17,10 @@ use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentProject */
 /* @var $form yii\widgets\ActiveForm */
+$context = $this->context->action;
+$action = Yii::$app->controller->action->id;
+
+$id = $model->isNewRecord ? 'new' : $model->id;
 ?>
 
 <div class="development-project-form">
@@ -138,94 +142,200 @@ HTML;
     <div class="form-group">
         <?= Html::activeLabel(new DevelopmentPerson, 'user_id', ['class' => 'col-sm-2 control-label']) ?>
         <div class="col-sm-10">       
-            <?php Pjax::begin(['id' => 'pjax_grid_person', 'enablePushState' => false]) ?>
-            <?=
-            GridView::widget([
-                'dataProvider' => $dataPerson,
-                'summary' => '',
-                'columns' => [
-                        ['class' => 'kartik\grid\SerialColumn'],
-                        [
-                        'attribute' => 'user_id',
-                        'value' => 'user.fullname',
-                        'format' => 'html',
-                        'contentOptions' => ['nowrap' => 'nowrap'],
-                    ],
-                        [
-                        'attribute' => 'dev_activity_char_id',
-                        //'filter' => DevelopmentActivityChar::getList(),
-                        //'value' => 'devChar.title',
-                        'content' => function($model) {
-                            return Select2::widget([
-                                        'name' => 'dev_activity_char_id',
-                                        'value' => [$model->dev_activity_char_id],
-                                        'data' => DevelopmentActivityChar::getList(),
-                                        'options' => ['placeholder' => 'เลือก..', 'multiple' => true],
-                                        'pluginOptions' => [
-                                            'allowClear' => true
-                                        ],
-                            ]);
-                        },
-                        'headerOptions' => ['nowrap' => 'nowrap'],
-                        'contentOptions' => ['nowrap' => 'nowrap']
-                    ],
-                        [
-                        'attribute' => 'rangeDate',
-                        'content' => function($model) {
-                            return DatePicker::widget([
-                                        'name' => 'start',
-                                        'value' => $model->start,
-                                        'type' => DatePicker::TYPE_RANGE,
-                                        'name2' => 'end',
-                                        'value2' => $model->end,
-                                        //'layout' => $layout3,
-                                        'pluginOptions' => [
-                                            'todayHighlight' => true,
-                                            'autoclose' => true,
-                                            'format' => 'yyyy-mm-dd',
-                                        //'startDate' => date('Y-m-d', strtotime("+3 day"))
-                                        ]
-                            ]);
-                        }
-                    ,
-                    ],
-                        [
-                        'attribute' => 'detail',
-                        'content' => function($model) {
-                            return Html::textInput('detail');
-                        }
-                    ,
-                    ],
-                        [
-                        'label' => 'ลบ',
-                        'content' => function($model) {
-                            return Html::a('ลบ',['update', 'id' => $model->dev_project_id, 'mode' => 'del', 'user_id' => $model->user_id], ['class' => 'btn btn-xs btn-warning']);
-                        }
-                    ,
-                    ],
-                ],
-                'toolbar' => [
-                        ['content' =>
-                        Html::button('<i class="glyphicon glyphicon-plus"></i> เพิ่มบุคคล', [
-                            'type' => 'button',
-                            'title' => Yii::t('app', 'Add Book'),
-                            'class' => 'btn btn-success',
-                            //'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");',
-                            'data-toggle' => 'modal',
-                            'data-target' => '#modal_add_person',
-                        ])
-                        . ' ' .
-                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax' => 1, 'class' => 'btn btn-default', 'title' => Yii::t('app', 'Reset Grid')])
-                    ],
-                //'{toggleData}',
-                //'{export}',
-                ],
-                'panel' => [
-                    'type' => 'default',
-                    'heading' => false
-                ],
-            ])
+            <?php Pjax::begin(['id' => 'pjax_grid_person', 'enablePushState' => false]);
             ?>
+            <?=
+            Html::button('<i class="glyphicon glyphicon-plus"></i> เพิ่มบุคคล', [
+                'type' => 'button',
+                'title' => Yii::t('app', 'Add Book'),
+                'class' => 'btn btn-success',
+                //'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");',
+                'data-toggle' => 'modal',
+                'data-target' => '#modal_add_person',
+            ]);
+            ?>
+
+            <?php
+            //print_r($selectedPerson);
+            ?>
+            <table class="kv-grid-table table table-hover table-bordered table-striped kv-table-wrap">
+                <thead>
+                    <tr>
+                        <th><?= Html::label("#")?></th>
+                        <th><?= Html::activeLabel(new DevelopmentPerson, 'user_id')?></th>
+                        <th><?= Html::activeLabel(new DevelopmentPerson, 'dev_activity_char_id')?></th>
+                        <th><?= Html::activeLabel(new DevelopmentPerson, 'rangeDate')?></th>
+                        <th><?= Html::activeLabel(new DevelopmentPerson, 'detail')?></th>
+                        <th><?= Html::label("ลบ")?></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php
+                    $session = Yii::$app->session;
+                    $index = 0;
+
+                    if($session->has('dev_project') && !empty($session['dev_project'][$id]))
+                    foreach ($session['dev_project'][$id] as $key => $sessionPerson):
+                        $modelDevPerson = new DevelopmentPerson();
+                        $sessionPerson = (object) $sessionPerson;
+                        //print_r($modelPerson);
+                        //exit();
+//                        echo $modelPerson->char;
+//                    echo "<br/>";
+                        $modelDevPerson->user_id = $sessionPerson->user_id;
+                        $modelDevPerson->dev_activity_char_id = $sessionPerson->char?$sessionPerson->char:null;
+                        $modelDevPerson->start = $sessionPerson->start;
+                        $modelDevPerson->end = $sessionPerson->end;
+                        $modelDevPerson->detail = $sessionPerson->detail;
+                        ?>            
+                        <tr>
+                            <td><?= ( ++$index) ?></td>
+                            <td>
+                                <?= $sessionPerson->user_id ?>
+                                <?= $sessionPerson->fullname ?>
+                                <?= $form->field($modelDevPerson, "[{$key}]user_id")->hiddenInput()->hint(false)->label(false) ?>
+                            </td>
+                            <td>
+                                <?php /* print_r($modelDevPerson->dev_activity_char_id) */ ?>
+
+                                <?=
+                                $form->field($modelDevPerson, "[{$key}]dev_activity_char_id", ['showLabels' => false])->widget(Select2::className(), [
+                                    //'name' => 'dev_activity_char_id',
+                                    //'value' => [1,2,3],
+                                    'data' => DevelopmentActivityChar::getList(),
+                                    'options' => ['placeholder' => 'เลือก..', 'multiple' => true],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+
+                            </td>
+                            <td>
+                                <?=
+                                $form->field($modelDevPerson, "[{$key}]start", ['showLabels' => false])->widget(DatePicker::className(), [
+                                    //'name' => 'start',
+                                    //'value' => $sessionPerson->start,
+                                    'type' => DatePicker::TYPE_RANGE,
+                                    'options' => [
+                                        'placeholder' => 'เริ่มวันที่',
+                                    ],
+                                    'options2' => [
+                                        'placeholder' => 'สิ้นสุด',
+                                    ],
+                                    'attribute2' => "[{$key}]end",
+                                    //'value2' => $sessionPerson->end,
+                                    //'layout' => $layout3,
+                                    'separator' => 'ถึง',
+                                    'pluginOptions' => [
+                                        'todayHighlight' => true,
+                                        'autoclose' => true,
+                                        'format' => 'yyyy-mm-dd',
+                                        'startDate' => $model->start,
+                                        'endDate' => $model->end,
+                                    ]
+                                ]);
+                                ?>
+
+                            </td>
+                            <td><?= $form->field($modelDevPerson, "[{$key}]detail", ['showLabels' => false])->textInput() ?></td>
+                            <td><?= Html::a('ลบ', [$action, 'id' => $id, 'mode' => 'del', 'user_id' => $sessionPerson->user_id], ['class' => 'a_del']); ?></td>
+                        </tr>
+                        <?php
+                    endforeach;
+                    ?>
+
+                </tbody>
+            </table>
+
+            <?php /*
+              GridView::widget([
+              'dataProvider' => $dataPerson,
+              'summary' => '',
+              'columns' => [
+              ['class' => 'kartik\grid\SerialColumn'],
+              [
+              'attribute' => 'user_id',
+              'value' => 'user.fullname',
+              'format' => 'html',
+              'contentOptions' => ['nowrap' => 'nowrap'],
+              ],
+              [
+              'attribute' => 'dev_activity_char_id',
+              //'filter' => DevelopmentActivityChar::getList(),
+              //'value' => 'devChar.title',
+              'content' => function($model) {
+              return Select2::widget([
+              'name' => 'dev_activity_char_id',
+              'value' => [$model->dev_activity_char_id],
+              'data' => DevelopmentActivityChar::getList(),
+              'options' => ['placeholder' => 'เลือก..', 'multiple' => true],
+              'pluginOptions' => [
+              'allowClear' => true
+              ],
+              ]);
+              },
+              'headerOptions' => ['nowrap' => 'nowrap'],
+              'contentOptions' => ['nowrap' => 'nowrap']
+              ],
+              [
+              'attribute' => 'rangeDate',
+              'content' => function($model) {
+              return DatePicker::widget([
+              'name' => 'start',
+              'value' => $model->start,
+              'type' => DatePicker::TYPE_RANGE,
+              'name2' => 'end',
+              'value2' => $model->end,
+              //'layout' => $layout3,
+              'pluginOptions' => [
+              'todayHighlight' => true,
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              //'startDate' => date('Y-m-d', strtotime("+3 day"))
+              ]
+              ]);
+              }
+              ,
+              ],
+              [
+              'attribute' => 'detail',
+              'content' => function($model) {
+              return Html::textInput('detail');
+              }
+              ,
+              ],
+              [
+              'label' => 'ลบ',
+              'content' => function($model) {
+              return Html::a('ลบ',['update', 'id' => $model->dev_project_id, 'mode' => 'del', 'user_id' => $model->user_id], ['class' => 'btn btn-xs btn-warning']);
+              }
+              ,
+              ],
+              ],
+              'toolbar' => [
+              ['content' =>
+              Html::button('<i class="glyphicon glyphicon-plus"></i> เพิ่มบุคคล', [
+              'type' => 'button',
+              'title' => Yii::t('app', 'Add Book'),
+              'class' => 'btn btn-success',
+              //'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");',
+              'data-toggle' => 'modal',
+              'data-target' => '#modal_add_person',
+              ])
+              . ' ' .
+              Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax' => 1, 'class' => 'btn btn-default', 'title' => Yii::t('app', 'Reset Grid')])
+              ],
+              //'{toggleData}',
+              //'{export}',
+              ],
+              'panel' => [
+              'type' => 'default',
+              'heading' => false
+              ],
+              ])
+             */ ?>
             <?php Pjax::end(); ?>
         </div>
     </div>
@@ -278,7 +388,8 @@ echo yii\grid\GridView::widget([
                 $class = $model['selected'] ? 'btn btn-warning' : 'btn btn-success';
 
 
-                return Html::a($title, ['update', 'id' => $model['id'], 'mode' => $mode, 'user_id' => $model["user_id"]], ['class' => $class]);
+                $action = Yii::$app->controller->action->id;
+                return Html::a($title, [$action, 'id' => $model['id'], 'mode' => $mode, 'user_id' => $model["user_id"]], ['class' => $class]);
             }
         ]
     ]
@@ -290,21 +401,37 @@ Pjax::end();
 //print_r($person);
 //exit();
 $this->registerJs(
-'$("document").ready(function(){ 
+        '$("document").ready(function(){ 
     
+//add
+     
     $("#pjax_add_person").on("pjax:end", function() {
         $.pjax.reload({container:"#pjax_grid_person"});  //Reload GridView
 
     });  
-   
+  
+  
+//del
+/*
     $("#pjax_grid_person").on("pjax:end", function() {
         $.pjax.reload({container:"#pjax_add_person"});  //Reload GridView
 
     });  
+    */
+    /*
+    $(document).on("click","a.a_del",function(e){
+        $.pjax.reload({container:"#pjax_add_person"});
+    });*/
+    
+    
+    $("#modal_add_person").on("show.bs.modal", function(event){
+        $.pjax.reload({container:"#pjax_add_person"});
+    });
+
+    
    
 
 
 });'
-, yii\web\View::POS_END);
-
+        , yii\web\View::POS_END);
 ?>
