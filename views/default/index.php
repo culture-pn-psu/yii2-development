@@ -4,6 +4,7 @@ use yii\helpers\Html;
 //use yii\grid\GridView;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 use culturePnPsu\development\models\DevelopmentPerson;
 use culturePnPsu\development\models\DevelopmentProject;
 use culturePnPsu\development\models\DevelopmentActivityChar;
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterType' => GridView::FILTER_SELECT2,
                     'filterWidgetOptions' => [
                         'pluginOptions' => ['allowClear' => true],
-                        'options'=>['id'=>'filter_user_id']
+                        'options' => ['id' => 'filter_user_id']
                     ],
                     'filterInputOptions' => ['placeholder' => 'ค้นหาบุคลากร'],
                 ],
@@ -54,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filterType' => GridView::FILTER_SELECT2,
                     'filterWidgetOptions' => [
                         'pluginOptions' => ['allowClear' => true],
+                        'options' => ['id' => 'filter_dev_project_id']
                     ],
                     'filterInputOptions' => ['placeholder' => 'ค้นหาโครงการ'],
                 ],
@@ -68,14 +70,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'filter' => DevelopmentActivityChar::getList(),
                     'filterType' => GridView::FILTER_DATE_RANGE,
                     'filterWidgetOptions' => [
-                        'language'=>Yii::$app->language,
+                        'language' => Yii::$app->language,
                         'pluginOptions' => ['allowClear' => true],
                     ],
                     'format' => 'html',
                     'value' => 'rangeDate',
                     'contentOptions' => ['nowrap' => 'nowrap']
                 ],
-                    ['class' => 'kartik\grid\ActionColumn'],
+                    [
+                    'class' => 'kartik\grid\ActionColumn',
+                    'urlCreator' => function ($action, $model) {
+                        return Url::to([$action, 'user_id' => $model->user_id, 'dev_project_id' => $model->dev_project_id]);
+                    },
+                ],
             ];
             ?>
 

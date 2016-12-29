@@ -4,6 +4,7 @@ namespace culturePnPsu\development\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "development_project".
@@ -141,8 +142,16 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
     public static function getItemIsinAgency() {
         return self::itemsAlias('isin_agency');
     }
+    public function getIsinAgencyLabel() {
+        return ArrayHelper::getValue($this->getItemIsinAgency(), $this->isin_agency);
+    }
+    
     public static function getItemBudgetStatus() {
         return self::itemsAlias('budget_status');
+    }
+    
+    public function getBudgetStatusLabel() {
+        return ArrayHelper::getValue($this->getItemBudgetStatus(), $this->budget_status);
     }
 
     public static function getList() {
@@ -154,7 +163,7 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
      * @return text
      */
     public function getTitlePlace() {
-        return $this->title . "<br/><small class='text-muted'>" . $this->place . "</small>";
+        return Html::a($this->title,['/development/project/view','id'=>$this->id]) . "<br/><small class='text-muted'>" . $this->place . "</small>";
     }
 
     public function getRangeDate() {

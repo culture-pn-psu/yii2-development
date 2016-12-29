@@ -58,26 +58,66 @@ use kartik\widgets\Select2;
             <div class="col-sm-3">
                 <?= $form->field($model, 'explodeBy')->dropDownList(DevelopmentPerson::getExplodeBy(), ['prompt' => 'เลือก']) ?>
             </div>
-
-            <div class="col-sm-3 explodeBy explodeBy-6">    
+            
+            <div class="col-sm-3 explodeBy explodeBy-1">    
                 <?=
-                $form->field($model, 'start')->widget(DatePicker::className(), [
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
-                    ]
-                ])
+                $form->field($model, 'eduYear')->dropDownList(DevelopmentPerson::getItemEduYear(),['prompt'=>'--- เลือก ---'])
                 ?>
             </div>
-            <div class="col-sm-3 explodeBy explodeBy-6">    
+            <div class="col-sm-3 explodeBy explodeBy-2">    
                 <?=
-                $form->field($model, 'end')->widget(DatePicker::className(), [
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
-                    ]
-                ])
+                $form->field($model, 'budgetYear')->dropDownList(DevelopmentPerson::getItemBudgetYear(),['prompt'=>'--- เลือก ---'])
                 ?>
+            </div>
+            
+            <div class="col-sm-3 explodeBy explodeBy-3">    
+                <?=
+                $form->field($model, 'month')->dropDownList(DevelopmentPerson::getMonth(),['prompt'=>'--- เลือก ---'])
+                ?>
+            </div>
+            <div class="col-sm-3 explodeBy explodeBy-3">    
+                <?=
+                $form->field($model, 'year')->dropDownList(DevelopmentPerson::getYear(),['prompt'=>'--- เลือก ---'])
+                ?>
+            </div>
+            
+            
+            <div class="col-sm-3 explodeBy explodeBy-4">    
+                <?=
+                $form->field($model, 'assessment')->dropDownList(DevelopmentPerson::getItemAssessment(),['prompt'=>'--- เลือก ---'])
+                ?>
+            </div>
+            
+            
+            
+            
+
+            
+            <div class="col-sm-6 explodeBy explodeBy-5">    
+                
+                
+                <?=
+                        $form->field($model, "start")->widget(DatePicker::className(), [
+                            //'name' => 'start',
+                            //'value' => $sessionPerson->start,
+                            'type' => DatePicker::TYPE_RANGE,
+                            'options' => [
+                                'placeholder' => 'เริ่มวันที่',
+                            ],
+                            'options2' => [
+                                'placeholder' => 'สิ้นสุด',
+                            ],
+                            'attribute2' => "end",
+                            //'value2' => $sessionPerson->end,
+                            //'layout' => $layout3,
+                            'separator' => 'ถึง',
+                            'pluginOptions' => [
+                                'todayHighlight' => true,
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd',
+                            ]
+                        ])->label('ช่วงวันที่');
+                        ?>
             </div>
 
         </div>

@@ -1,31 +1,79 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\Select2;
+use kartik\helpers\Html;
+use wbraganca\dynamicform\DynamicFormWidget;
+use yii\widgets\DetailView;
+use culturePnPsu\development\models\DevelopmentPerson;
 
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentPerson */
 /* @var $form yii\widgets\ActiveForm */
+//$modelProject = $model->devProject;
 ?>
 
 <div class="development-person-form">
 
-    <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+<?php
+$form = ActiveForm::begin([
+            'type' => ActiveForm::TYPE_HORIZONTAL,
+            'formConfig' => ['labelSpan' => 3, 'deviceSize' => ActiveForm::SIZE_SMALL],
+            'options' => [
+                'id' => 'dynamic-form'
+            ]
+        ]);
+?>
+    
+    <?=
+    DetailView::widget([
+        'model' => $model,
+        'template' => '<tr><th class="text-right" width="200" nowrap="">{label}</th><td>{value}</td></tr>',
+        'attributes' => [
+                [
+                'attribute' => 'user_id',
+                'value' => $model->user->fullname
+            ],
+                [
+                'attribute' => 'dev_project_id',
+                'value' => $model->devProject->title
+            ],
+                [
+                'attribute' => 'devProject.rangeDate',
+                'format' => 'html',
+            ],
+            'devProject.place',
+            'devProject.responsible_agency',
+                [
+                'attribute' => 'devProject.isin_agency',
+                'value' => $model->devProject->isinAgencyLabel
+            ],
+                [
+                'attribute' => 'devProject.budget_status',
+                'value' => $model->devProject->budgetStatusLabel
+            ],
+               
+            'devProject.budget',
+            'devProject.budget_revenue',
+        ],
+    ])
+    ?>
 
-    <?= $form->field($model, 'dev_project_id')->textInput() ?>
 
-    <?= $form->field($model, 'dev_activity_char_id')->textInput() ?>
+    <?=
+    $this->render('_form_option_values', [
+        'form' => $form,
+        'modelChar' => $model->devChars?$model->devChars:[new DevelopmentPerson],
+        'modelProject' => $model->devProject,
+    ])
+    ?>
 
-    <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'start')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'end')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="col-sm-offset-3 col-sm-10">
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'สร้าง') : Yii::t('app', 'บันทึก'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

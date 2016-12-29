@@ -53,8 +53,18 @@ class ProjectController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
+        $model = $this->findModel($id);
+        
+        $modelPerson = DevelopmentPerson::find()->where(['dev_project_id'=>$id]);
+        //$modelPreson = $model->developmentPeople;
+        $modelPerson = new ActiveDataProvider([
+            'query' => $modelPerson,
+        ]);
+
+
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    'model' => $model,
+                    'modelPerson' => $modelPerson
         ]);
     }
 
@@ -69,6 +79,8 @@ class ProjectController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
+            $model->created_at = time();
+            $model->created_by = Yii::$app->user->id;
 
             if ($model->save()) {
                 $this->addPerson($model, $post);
@@ -163,9 +175,8 @@ class ProjectController extends Controller {
             }
 
             $session->set('dev_project', [$id => $newPersons]);
-             
         }
-       
+
 //echo "<pre>";
 //        print_r($session['dev_project']);
 //        echo "</pre><hr/>";
@@ -228,10 +239,10 @@ class ProjectController extends Controller {
      * @param type $post
      */
     public function addPerson($model, $post) {
-        if($model->id)
-        DevelopmentPerson::deleteAll(['dev_project_id' => $model->id]);
-        echo "<pre>";
-        print_r($post['DevelopmentPerson']);
+        if ($model->id)
+            DevelopmentPerson::deleteAll(['dev_project_id' => $model->id]);
+//        echo "<pre>";
+//        print_r($post['DevelopmentPerson']);
         //exit();
         if ($post['DevelopmentPerson']) {
             foreach ($post['DevelopmentPerson'] as $devPerson) {
@@ -275,6 +286,8 @@ class ProjectController extends Controller {
             $post = Yii::$app->request->post();
 
 
+            $model->updated_at = time();
+            $model->updated_by = Yii::$app->user->id;
             if ($model->save()) {
 
                 $this->addPerson($model, $post);

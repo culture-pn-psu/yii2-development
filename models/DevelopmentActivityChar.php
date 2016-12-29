@@ -4,6 +4,7 @@ namespace culturePnPsu\development\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use culturePnPsu\user\models\Profile;
 
 /**
  * This is the model class for table "development_activity_char".
@@ -15,33 +16,30 @@ use yii\helpers\ArrayHelper;
  * @property integer $updated_by
  * @property integer $updated_at
  */
-class DevelopmentActivityChar extends \yii\db\ActiveRecord
-{
+class DevelopmentActivityChar extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'development_activity_char';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['title'], 'required'],
-            [['created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
-            [['title'], 'string', 'max' => 45],
+                [['title'], 'required'],
+                [['created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+                [['title'], 'string', 'max' => 45],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'ชื่อลักษณะกิจกรรม'),
@@ -51,8 +49,19 @@ class DevelopmentActivityChar extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'ปรับปรุงเมื่อ'),
         ];
     }
-    
-    public static function getList(){
-         return ArrayHelper::map(self::find()->all(),'id','title');
+
+    public static function getList() {
+        return ArrayHelper::map(self::find()->all(), 'id', 'title');
     }
+
+    
+
+    public function getCreatedBy() {
+        return $this->hasOne(Profile::className(), ['user_id' => 'created_by']);
+    }
+    
+    public function getUpdatedBy() {
+        return $this->hasOne(Profile::className(), ['user_id'=> 'updated_by']);
+    }
+
 }

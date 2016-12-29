@@ -39,7 +39,7 @@ $module = $this->context->module->id;
                 $menuItems = [
                         [
                         'label' => 'บุคลากรทั้งหมด',
-                        'url' => ["/{$module}/default/index"], 'icon' => 'fa fa-book'
+                        'url' => ["/{$module}/default"], 'icon' => 'fa fa-book'
                     ],
 //                        [
 //                        'label' => 'บัญชี',
@@ -87,7 +87,7 @@ $module = $this->context->module->id;
                 $menuItems = [
                         [
                         'label' => 'โครงการพัฒนาทั้งหมด',
-                        'url' => ["/{$module}/project/index"], 'icon' => 'fa fa-book'
+                        'url' => ["/{$module}/project"], 'icon' => 'fa fa-book'
                     ],
 //                        [
 //                        'label' => 'บัญชี',
@@ -114,7 +114,48 @@ $module = $this->context->module->id;
         </div>
         <!-- /. box -->
         
-        
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <?= Yii::t('app', 'จัดการข้อมูลอื่น') ?>
+                </h3>
+
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+
+                <?php
+                $menuItems = [
+                        [
+                        'label' => 'ลักษณะกิจกรรม',
+                        'url' => ["/{$module}/activity-char"], 'icon' => 'fa fa-book'
+                    ],
+//                        [
+//                        'label' => 'บัญชี',
+//                        'url' => ["/{$module}/default/setting"],
+//                        'icon' => 'fa fa-adn'
+//                    ],
+//                    [
+//                        'label' => 'Chanage Password',
+//                        'url' => ["/{$module}/default/change-password"],
+//                        'icon' => 'fa fa-key'
+//                    ],
+                ];
+                //$menuItems = Helper::filter($menuItems);
+                //$nav = new Navigate();
+                echo dmstr\widgets\Menu::widget([
+                    'options' => ['class' => 'nav nav-pills nav-stacked'],
+                    //'linkTemplate' =>'<a href="{url}">{icon} {label} {badge}</a>',
+                    'items' => $menuItems,
+                ])
+                ?>                 
+
+            </div>
+            <!-- /.box-body -->
+        </div>
         
     </div>
     <!-- /.col -->
