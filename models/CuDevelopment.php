@@ -1,6 +1,6 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
 

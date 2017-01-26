@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -12,36 +13,105 @@ $this->title = Yii::t('app', 'ลักษณะกิจกรรม');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<div class="development-activity-char-index">
 
-<div class='box box-info'>
-    <div class='box-header'>
-        <h3 class='box-title'><?= Html::encode($this->title) ?></h3>
-    </div><!--box-header -->
+<?php
+$columns = [
+    'id' => 'id',
+    'title' => 'title',
+    'created_at' => 'created_at:datetime',
+    'created_by' => 'created_by',
+    'updated_at' => 'updated_at',
+    'updated_by' => 'updated_by',
+];
 
-    <div class='box-body pad'>
+$gridColumns = [
+   ['class' => '\kartik\grid\SerialColumn'],
+    $columns['title'],
+    $columns['created_at'],
+    $columns['created_by'],
+    ['class' => '\kartik\grid\ActionColumn',]
+];
 
-        <div class="development-activity-char-index">
+$fullExportMenu = ExportMenu::widget([
+    'dataProvider' => $dataProvider,
+    'columns' => $columns,
+    'filename' => $this->title,
+    'showConfirmAlert' => false,
+    'target' => ExportMenu::TARGET_BLANK,
+    'fontAwesome' => true,
+    'pjaxContainerId' => 'kv-pjax-container',
+    'dropdownOptions' => [
+        'label' => 'Full',
+        'class' => 'btn btn-default',
+        'itemsBefore' => [
+            '<li class="dropdown-header">Export All Data</li>',
+        ],
+    ],
+]);
+?>
+<div class="person-index">
 
-            <p>
-                <?= Html::a(Yii::t('app', 'เพิ่มลักษณะกิจกรรม'), ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
-            <?php Pjax::begin(); ?>    <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                    //'id',
-                    'title',
-                    //'created_by',
-                    //'created_at',
-                    //'updated_by',
-                    // 'updated_at',
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]);
-            ?>
-            <?php Pjax::end(); ?>
-        </div>
-    </div>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'id' => 'data-grid',
+        'pjax'=>true,
+//        'resizableColumns'=>true,
+//        'resizeStorageKey'=>Yii::$app->user->id . '-' . date("m"),
+//        'floatHeader'=>true,
+//        'floatHeaderOptions'=>['scrollingTop'=>'50'],
+        'export' => [
+            'label' => Yii::t('yii', 'Page'),
+            'fontAwesome' => true,
+            'target' => GridView::TARGET_SELF,
+            'showConfirmAlert' => false,
+        ],
+//         'exportConfig' => [
+//             GridView::HTML=>['filename' => $exportFilename],
+//             GridView::CSV=>['filename' => $exportFilename],
+//             GridView::TEXT=>['filename' => $exportFilename],
+//             GridView::EXCEL=>['filename' => $exportFilename],
+//             GridView::PDF=>['filename' => $exportFilename],
+//             GridView::JSON=>['filename' => $exportFilename],
+//         ],
+        'panel' => [
+            //'heading'=>'<h3 class="panel-title"><i class="fa fa-th"></i> '.Html::encode($this->title).'</h3>',
+//             'type'=>'primary',
+            'before'=> '<div class="btn-group">'.
+                Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app', 'Create'), ['create'], [
+                    'class' => 'btn btn-success btn-flat',
+                    'data-pjax' => 0
+                ]) . ' '.
+                Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('app', 'Reload'), '#!', [
+                    'class' => 'btn btn-info btn-flat btn-reload',
+                    'title' => 'Reload',
+                    'id' => 'btn-reload-grid'
+                ]) . ' '.
+                Html::a('<i class="glyphicon glyphicon-trash"></i> '.Yii::t('app', 'Trash'), ['trash/index'], [
+                    'class' => 'btn btn-warning btn-flat',
+                    'data-pjax' => 0
+                ]) . ' '.
+                '</div>',
+                'heading'=>false,
+                //'footer'=>false,
+        ],
+        'toolbar' => [
+            '{export}',
+            '{toggleData}',
+            $fullExportMenu,
+        ],
+        'columns' => $gridColumns,
+    ]); ?>
 </div>
+<?php
+$js[] = "
+$(document).on('click', '#btn-reload-grid', function(e){
+    e.preventDefault();
+    $.pjax.reload({container: '#data-grid-pjax'});
+});
+";
+
+$this->registerJs(implode("\n", $js));
+  
+  ?>

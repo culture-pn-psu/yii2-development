@@ -1,9 +1,9 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
-use culturePnPsu\user\models\Profile;
+use andahrm\person\models\Person;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -51,7 +51,7 @@ class DevelopmentPerson extends \yii\db\ActiveRecord {
             'dev_activity_char_id' => Yii::t('app', 'ลักษณะกิจกรรม'),
             'detail' => Yii::t('app', 'หมายเหตุ'),
             'start' => Yii::t('app', 'วันที่ไป'),
-            'end' => Yii::t('app', 'สิ้นสุด'),
+            'end' => Yii::t('app', 'สิ้นสุด'),            
             'rangeDate' => Yii::t('app', 'ช่วงวัน'),
             'explodeBy' => Yii::t('app', 'แบ่งตามช่วงระยาเวลา'),
             'eduYear' => Yii::t('app', 'ปีการศึกษา'),
@@ -180,7 +180,7 @@ class DevelopmentPerson extends \yii\db\ActiveRecord {
 
 
     public function getUser() {
-        return $this->hasOne(Profile::className(), ['user_id' => 'user_id']);
+        return $this->hasOne(Person::className(), ['user_id' => 'user_id']);
     }
 
     public static function getPersonList() {

@@ -5,17 +5,18 @@
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use kartik\helpers\Html;
+use yii\helpers\Url;
 use kartik\widgets\DatePicker;
 use kartik\widgets\Typeahead;
-use culturePnPsu\development\models\DevelopmentProject;
+use andahrm\development\models\DevelopmentProject;
 use kartik\grid\GridView;
-use culturePnPsu\development\models\DevelopmentPerson;
-use culturePnPsu\development\models\DevelopmentActivityChar;
+use andahrm\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentActivityChar;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
-/* @var $model culturePnPsu\development\models\DevelopmentProject */
+/* @var $model andahrm\development\models\DevelopmentProject */
 /* @var $form yii\widgets\ActiveForm */
 $context = $this->context->action;
 $action = Yii::$app->controller->action->id;
@@ -84,7 +85,8 @@ HTML;
                 'dataset' => [
                         [
                         'local' => DevelopmentProject::getPlaceList(),
-                        'limit' => 10
+                        'limit' => 10,
+                        'remote' => Url::to('index')
                     ]
                 ]
             ]);
@@ -103,7 +105,8 @@ HTML;
                 'dataset' => [
                         [
                         'local' => DevelopmentProject::getResponsibleAgencyList(),
-                        'limit' => 10
+                        'limit' => 10,
+                        'remote' => Url::to('index')
                     ]
                 ]
             ]);

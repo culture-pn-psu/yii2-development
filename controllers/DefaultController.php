@@ -1,10 +1,10 @@
 <?php
 
-namespace culturePnPsu\development\controllers;
+namespace andahrm\development\controllers;
 
 use Yii;
-use culturePnPsu\development\models\DevelopmentPerson;
-use culturePnPsu\development\models\DevelopmentPersonSearch;
+use andahrm\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentPersonSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

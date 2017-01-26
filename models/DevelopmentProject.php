@@ -1,6 +1,6 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -15,7 +15,7 @@ use yii\helpers\Html;
  * @property string $end
  * @property string $place
  * @property string $responsible_agency
- * @property integer $stutus
+ * @property integer $status
  * @property integer $budget_status
  * @property string $budget
  * @property string $budget_revenue
@@ -42,7 +42,7 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
         return [
                 [['title', 'start', 'end', 'place', 'responsible_agency'], 'required'],
                 [['start', 'end'], 'safe'],
-                [['isin_agency', 'stutus', 'budget_status', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+                [['isin_agency', 'status', 'budget_status', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
                 [['budget'], 'number'],
                 [['title', 'place', 'responsible_agency'], 'string', 'max' => 255],
                 [['budget_revenue'], 'string', 'max' => 45],
@@ -60,7 +60,7 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
             'end' => Yii::t('app', 'สิ้นสุด'),
             'place' => Yii::t('app', 'สถานที่'),
             'responsible_agency' => Yii::t('app', 'หน่วยงานที่จัด'),
-            'stutus' => Yii::t('app', 'สถานะ'),
+            'status' => Yii::t('app', 'สถานะ'),
             'isin_agency' => Yii::t('app', 'เป็นหน่วยงาน'),
             'budget_status' => Yii::t('app', 'ใช้เงิน'),
             'budget' => Yii::t('app', 'งบประมาณแผ่นดิน'),
@@ -173,11 +173,11 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
     }
 
     public function getStartFormat() {
-        return $this->start ? Yii::$app->thaiFormatter->asDate($this->start) : null;
+        return $this->start ? Yii::$app->formatter->asDate($this->start) : null;
     }
 
     public function getEndFormat() {
-        return $this->end ? Yii::$app->thaiFormatter->asDate($this->end) : null;
+        return $this->end ? Yii::$app->formatter->asDate($this->end) : null;
     }
 
     /**
@@ -186,7 +186,7 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
      */
     public static function getPlaceList() {
         $model = self::find()->distinct(['place'])->select(['place'])->all();
-        return ArrayHelper::getColumn($model, 'place');
+        return $model?ArrayHelper::getColumn($model, 'place'):null;
     }
 
     /**

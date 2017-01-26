@@ -10,12 +10,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Activity Chars'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class='box box-info'>
-    <div class='box-header'>
-        <h3 class='box-title'><?= Html::encode($this->title) ?></h3>
-    </div><!--box-header -->
 
-    <div class='box-body pad'>
         <p>
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?=
@@ -49,5 +44,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ])
         ?>
 
-    </div>
-</div>
+   

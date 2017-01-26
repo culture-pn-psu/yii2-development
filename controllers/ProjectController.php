@@ -1,14 +1,14 @@
 <?php
 
-namespace culturePnPsu\development\controllers;
+namespace andahrm\development\controllers;
 
 use Yii;
-use culturePnPsu\development\models\DevelopmentProject;
-use culturePnPsu\development\models\DevelopmentProjectSearch;
+use andahrm\development\models\DevelopmentProject;
+use andahrm\development\models\DevelopmentProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use culturePnPsu\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentPerson;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
@@ -183,7 +183,7 @@ class ProjectController extends Controller {
 //        exit();
 
         if (isset($mode) && $mode == 'add') { # Event mode Add person
-            $person = \culturePnPsu\user\models\Profile::findOne(['user_id' => $user_id]);
+            $person = \andahrm\person\models\Person::findOne(['user_id' => $user_id]);
             $test = $session['dev_project'];
             $test[$id][$user_id] = [
                 'user_id' => $user_id,
@@ -205,7 +205,7 @@ class ProjectController extends Controller {
 
 
         # Get Person All
-        $person = \culturePnPsu\user\models\Profile::find()->orderBy('user_id')->all();
+        $person = \andahrm\person\models\Person::find()->orderBy('user_id')->all();
         $resPerson = [];
         foreach ($person as $data) {
             $resPerson[$data->user_id] = [

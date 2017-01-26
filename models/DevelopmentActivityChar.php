@@ -1,10 +1,10 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use culturePnPsu\user\models\Profile;
+use andahrm\person\models\Person;
 
 /**
  * This is the model class for table "development_activity_char".
@@ -57,11 +57,11 @@ class DevelopmentActivityChar extends \yii\db\ActiveRecord {
     
 
     public function getCreatedBy() {
-        return $this->hasOne(Profile::className(), ['user_id' => 'created_by']);
+        return $this->hasOne(Person::className(), ['user_id' => 'created_by']);
     }
     
     public function getUpdatedBy() {
-        return $this->hasOne(Profile::className(), ['user_id'=> 'updated_by']);
+        return $this->hasOne(Person::className(), ['user_id'=> 'updated_by']);
     }
 
 }

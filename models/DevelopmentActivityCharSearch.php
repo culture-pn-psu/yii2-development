@@ -1,14 +1,14 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use culturePnPsu\development\models\DevelopmentActivityChar;
+use andahrm\development\models\DevelopmentActivityChar;
 
 /**
- * DevelopmentActivityCharSearch represents the model behind the search form about `culturePnPsu\development\models\DevelopmentActivityChar`.
+ * DevelopmentActivityCharSearch represents the model behind the search form about `andahrm\development\models\DevelopmentActivityChar`.
  */
 class DevelopmentActivityCharSearch extends DevelopmentActivityChar
 {

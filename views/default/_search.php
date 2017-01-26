@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use culturePnPsu\development\models\DevelopmentPerson;
-use culturePnPsu\development\models\DevelopmentProject;
-use culturePnPsu\development\models\DevelopmentActivityChar;
+use andahrm\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentProject;
+use andahrm\development\models\DevelopmentActivityChar;
 use kartik\widgets\DatePicker;
 use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
-/* @var $model culturePnPsu\development\models\DevelopmentPersonSearch */
+/* @var $model andahrm\development\models\DevelopmentPersonSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <h4 class="box-title">

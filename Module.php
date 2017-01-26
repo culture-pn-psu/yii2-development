@@ -1,6 +1,6 @@
 <?php
 
-namespace culturePnPsu\development;
+namespace andahrm\development;
 
 /**
  * development module definition class
@@ -10,13 +10,14 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'culturePnPsu\development\controllers';
+    public $controllerNamespace = 'andahrm\development\controllers';
 
     /**
      * @inheritdoc
      */
     public function init()
     {
+        $this->layout = 'main';
         parent::init();
 
         // custom initialization code goes here

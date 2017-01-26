@@ -1,14 +1,14 @@
 <?php
 
-namespace culturePnPsu\development\models;
+namespace andahrm\development\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use culturePnPsu\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentPerson;
 
 /**
- * DevelopmentPersonSearch represents the model behind the search form about `culturePnPsu\development\models\DevelopmentPerson`.
+ * DevelopmentPersonSearch represents the model behind the search form about `andahrm\development\models\DevelopmentPerson`.
  */
 class DevelopmentPersonSearch extends DevelopmentPerson {
 
