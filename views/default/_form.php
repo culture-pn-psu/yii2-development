@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 use culturePnPsu\development\models\DevelopmentPerson;
 
 /* @var $this yii\web\View */
-/* @var $model culturePnPsu\development\models\DevelopmentPerson */
+/* @var $model andahrm\dEvelopment\models\DevelopmentPerson */
 /* @var $form yii\widgets\ActiveForm */
 //$modelProject = $model->devProject;
 ?>
@@ -72,7 +72,7 @@ $form = ActiveForm::begin([
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-10">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'สร้าง') : Yii::t('app', 'บันทึก'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('andahrm', 'Create') : Yii::t('andahrm', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
 

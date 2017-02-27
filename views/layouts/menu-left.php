@@ -20,12 +20,12 @@ $module = $this->context->module->id;
 <div class="row">
     <div class="col-md-3 hidden-print">
 
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'เพิ่ม'),["/{$module}/default/create"], ['class' => 'btn btn-primary btn-block margin-bottom']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('andahrm', 'Create'),["/{$module}/default/create"], ['class' => 'btn btn-primary btn-block margin-bottom']) ?>
 
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= Yii::t('app', 'การจัดการงานพัฒนาบุคลากร') ?>
+                    <?= Yii::t('andahrm/development', 'Management Development'); ?>
                 </h3>
 
                 <div class="box-tools">
@@ -68,12 +68,12 @@ $module = $this->context->module->id;
         
         
         
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'เพิ่มโครงการพัฒนา'), ["/{$module}/project/create"], ['class' => 'btn btn-primary btn-block margin-bottom']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('andahrm', 'Create'), ["/{$module}/project/create"], ['class' => 'btn btn-primary btn-block margin-bottom']) ?>
 
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= Yii::t('app', 'โครงการพัฒนาบุคลากร') ?>
+                    <?= Yii::t('andahrm/development', 'Development Projects') ?>
                 </h3>
 
                 <div class="box-tools">
@@ -117,7 +117,7 @@ $module = $this->context->module->id;
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= Yii::t('app', 'จัดการข้อมูลอื่น') ?>
+                    <?= Yii::t('andahrm', 'จัดการข้อมูลอื่น') ?>
                 </h3>
 
                 <div class="box-tools">

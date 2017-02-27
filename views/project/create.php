@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentProject */
 
-$this->title = Yii::t('app', 'เพิ่มโครงการพัฒนา');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Projects'), 'url' => ['index']];
+$this->title = Yii::t('andahrm', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('andahrm/development', 'Development Projects'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

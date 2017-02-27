@@ -41,12 +41,12 @@ class DevelopmentActivityChar extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'ชื่อลักษณะกิจกรรม'),
-            'created_by' => Yii::t('app', 'สร้างโดย'),
-            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
-            'updated_by' => Yii::t('app', 'ปรับปรุงโดย'),
-            'updated_at' => Yii::t('app', 'ปรับปรุงเมื่อ'),
+            'id' => Yii::t('andahrm/development', 'ID'),
+            'title' => Yii::t('andahrm/development', 'Title'),
+            'created_by' => Yii::t('andahrm', 'Created By'),
+            'created_at' => Yii::t('andahrm', 'Created At'),
+            'updated_by' => Yii::t('andahrm', 'Updated By'),
+            'updated_at' => Yii::t('andahrm', 'Updated At'),
         ];
     }
 

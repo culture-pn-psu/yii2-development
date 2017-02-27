@@ -5,8 +5,10 @@ use kartik\widgets\Select2;
 use kartik\helpers\Html;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\widgets\DetailView;
-use culturePnPsu\development\models\DevelopmentPerson;
-use culturePnPsu\development\models\DevelopmentActivityChar;
+use andahrm\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentProject;
+use andahrm\development\models\DevelopmentActivityChar;
+use andahrm\person\models\Person
 
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentPerson */
@@ -34,14 +36,14 @@ use culturePnPsu\development\models\DevelopmentActivityChar;
     <div class="form-group">
         <?= Html::activeLabel($model, 'user_id', ['class' => 'col-sm-3 control-label']) ?>
         <div class="col-sm-9">
-            <?= $form->field($model, 'user_id', ['showLabels' => false])->dropdownList(culturePnPsu\user\models\Profile::getList(), ['prompt' => 'เลือก']) ?>
+            <?= $form->field($model, 'user_id', ['showLabels' => false])->dropdownList(Person::getList(), ['prompt' => 'เลือก']) ?>
         </div>
     </div>
 
     <div class="form-group">
         <?= Html::activeLabel($model, 'dev_project_id', ['class' => 'col-sm-3 control-label']) ?>
         <div class="col-sm-9">
-            <?= $form->field($model, 'dev_project_id', ['showLabels' => false])->dropdownList(culturePnPsu\development\models\DevelopmentProject::getList(), ['prompt' => 'เลือก']) ?>
+            <?= $form->field($model, 'dev_project_id', ['showLabels' => false])->dropdownList(DevelopmentProject::getList(), ['prompt' => 'เลือก']) ?>
         </div>
     </div>
 
@@ -63,7 +65,7 @@ use culturePnPsu\development\models\DevelopmentActivityChar;
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-10">
-<?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'สร้าง') : Yii::t('app', 'บันทึก'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<?= Html::submitButton($model->isNewRecord ? Yii::t('andahrm', 'Create') : Yii::t('andahrm', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
 

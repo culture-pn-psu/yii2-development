@@ -129,8 +129,8 @@ use kartik\widgets\Select2;
 
 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'ค้นหา'), ['class' => 'btn btn-primary']) ?> 
-            <?= Html::resetButton(Yii::t('app', 'ล้าง'), ['class' => 'btn btn-default']) ?>
+            <?= Html::submitButton(Yii::t('andahrm', 'Search'), ['class' => 'btn btn-primary']) ?> 
+            <?= Html::resetButton(Yii::t('andahrm', 'Clear'), ['class' => 'btn btn-default']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

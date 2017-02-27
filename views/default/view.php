@@ -2,32 +2,26 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use culturePnPsu\development\models\DevelopmentPerson;
+use andahrm\dEvelopment\models\DevelopmentPerson;
 
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentPerson */
 
 $this->title = $model->user->fullname;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development People'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('andahrm/development', 'Development People'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class='box box-info'>
-    <div class='box-header'>
-        <h3 class='box-title'><?= Html::encode($this->title) ?></h3>
-    </div><!--box-header -->
 
-    <div class='box-body pad'>
-        <div class="development-person-view">
 
 
 
             <p>
-                <?= Html::a(Yii::t('app', 'Update'), ['update', 'user_id' => $model->user_id, 'dev_project_id' => $model->dev_project_id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('andahrm', 'Update'), ['update', 'user_id' => $model->user_id, 'dev_project_id' => $model->dev_project_id], ['class' => 'btn btn-primary']) ?>
                 <?=
-                Html::a(Yii::t('app', 'Delete'), ['delete', 'user_id' => $model->user_id, 'dev_project_id' => $model->dev_project_id], [
+                Html::a(Yii::t('andahrm', 'Delete'), ['delete', 'user_id' => $model->user_id, 'dev_project_id' => $model->dev_project_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
-                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'confirm' => Yii::t('andahrm', 'Are you sure you want to delete this item?'),
                         'method' => 'post',
                     ],
                 ])
@@ -106,7 +100,3 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
 
             </table>
-
-        </div>
-    </div><!--box-body pad-->
-</div><!--box box-info-->

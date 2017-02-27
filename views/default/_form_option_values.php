@@ -5,9 +5,9 @@ use yii\helpers\Url;
 use yii\jui\JuiAsset;
 use yii\web\JsExpression;
 use wbraganca\dynamicform\DynamicFormWidget;
-use culturePnPsu\development\models\DevelopmentPerson;
+use andahrm\development\models\DevelopmentPerson;
 use kartik\widgets\DatePicker;
-use culturePnPsu\development\models\DevelopmentActivityChar;
+use andahrm\development\models\DevelopmentActivityChar;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -3,7 +3,10 @@
 namespace andahrm\development\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use andahrm\setting\models\Helper;
+use kuakling\datepicker\behaviors\DateBuddhistBehavior;
 use yii\helpers\Html;
 
 /**
@@ -26,13 +29,28 @@ use yii\helpers\Html;
  *
  * @property DevelopmentPerson[] $developmentPeople
  */
-class DevelopmentProject extends \yii\db\ActiveRecord {
+class DevelopmentProject extends ActiveRecord {
 
     /**
      * @inheritdoc
      */
     public static function tableName() {
         return 'development_project';
+    }
+    
+    
+    public function behaviors()
+    {
+        return [
+            'start' => [
+                'class' => DateBuddhistBehavior::className(),
+                'dateAttribute' => 'start',
+            ],
+            'end' => [
+                'class' => DateBuddhistBehavior::className(),
+                'dateAttribute' => 'end',
+            ],
+        ];
     }
 
     /**
@@ -54,22 +72,22 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'โครงการ/หลักสูตร'),
-            'start' => Yii::t('app', 'เริ่มวันที่'),
-            'end' => Yii::t('app', 'สิ้นสุด'),
-            'place' => Yii::t('app', 'สถานที่'),
-            'responsible_agency' => Yii::t('app', 'หน่วยงานที่จัด'),
-            'status' => Yii::t('app', 'สถานะ'),
-            'isin_agency' => Yii::t('app', 'เป็นหน่วยงาน'),
-            'budget_status' => Yii::t('app', 'ใช้เงิน'),
-            'budget' => Yii::t('app', 'งบประมาณแผ่นดิน'),
-            'budget_revenue' => Yii::t('app', 'งบประมาณเงินรายได้'),
-            'created_by' => Yii::t('app', 'สร้างโดย'),
-            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
-            'updated_by' => Yii::t('app', 'ปรับปรุงโดย'),
-            'updated_at' => Yii::t('app', 'ปรับปรุงเมื่อ'),
-            'rangeDate' => Yii::t('app', 'ช่วงวันที่'),
+            'id' => Yii::t('andahrm/development', 'ID'),
+            'title' => Yii::t('andahrm/development', 'Title'),
+            'start' => Yii::t('andahrm/development', 'Start'),
+            'end' => Yii::t('andahrm/development', 'End'),
+            'place' => Yii::t('andahrm/development', 'Place'),
+            'responsible_agency' => Yii::t('andahrm/development', 'Responsible Agency'),
+            'status' => Yii::t('andahrm/development', 'Status'),
+            'isin_agency' => Yii::t('andahrm/development', 'Is In Agency'),
+            'budget_status' => Yii::t('andahrm/development', 'Budget Status'),
+            'budget' => Yii::t('andahrm/development', 'Budget'),
+            'budget_revenue' => Yii::t('andahrm/development', 'Budget Revenue'),
+            'created_by' => Yii::t('andahrm', 'Created By'),
+            'created_at' => Yii::t('andahrm', 'Created At'),
+            'updated_by' => Yii::t('andahrm', 'Updated By'),
+            'updated_at' => Yii::t('andahrm', 'Update At'),
+            'rangeDate' => Yii::t('andahrm/development', 'Range Date'),
         ];
     }
 
@@ -86,11 +104,11 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
     public static function itemsAlias($key) {
         $items = [
             'status' => [
-                0 => Yii::t('app', 'ร่าง'),
-                1 => Yii::t('app', 'เสนอ'),
-                2 => Yii::t('app', 'อนุมัติ'),
-                3 => Yii::t('app', 'ไม่อนุมัติ'),
-                4 => Yii::t('app', 'ยกเลิก'),
+                0 => Yii::t('andahrm/development', 'Draft'),
+                1 => Yii::t('andahrm/development', 'Offer'),
+                2 => Yii::t('andahrm/development', 'Approve'),
+                3 => Yii::t('andahrm/development', 'Not Allowed'),
+                4 => Yii::t('andahrm/development', 'Canceled'),
             ],
             'explodeBy' => [
                 1 => 'ปีการศึกษา',
@@ -106,7 +124,7 @@ class DevelopmentProject extends \yii\db\ActiveRecord {
             ],
             'budget_status' => [
                 0 => 'ใช้เงิน',
-                1 => 'ไม่ใช่เงิน',
+                1 => 'ไม่ใช้เงิน',
             ]
         ];
         return ArrayHelper::getValue($items, $key, []);

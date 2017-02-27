@@ -6,10 +6,10 @@ use yii\helpers\StringHelper;
 /* @var $this yii\web\View */
 /* @var $model culturePnPsu\development\models\DevelopmentProject */
 
-$this->title = Yii::t('app', 'แก้ไขโครงการ::') . StringHelper::truncate($model->title, 40);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Projects'), 'url' => ['index']];
+$this->title = Yii::t('andahrm/development', 'Update Project'). ':: ' . StringHelper::truncate($model->title, 40);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('andahrm', 'Development Projects'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => StringHelper::truncate($model->title, 30), 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('andahrm', 'Update');
 ?>
 
 <div class="development-project-update">

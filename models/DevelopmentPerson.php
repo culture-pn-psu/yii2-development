@@ -46,19 +46,19 @@ class DevelopmentPerson extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'user_id' => Yii::t('app', 'บุคลากร'),
-            'dev_project_id' => Yii::t('app', 'โครงการ/หัวข้อหลักสูตร'),
-            'dev_activity_char_id' => Yii::t('app', 'ลักษณะกิจกรรม'),
-            'detail' => Yii::t('app', 'หมายเหตุ'),
-            'start' => Yii::t('app', 'วันที่ไป'),
-            'end' => Yii::t('app', 'สิ้นสุด'),            
-            'rangeDate' => Yii::t('app', 'ช่วงวัน'),
-            'explodeBy' => Yii::t('app', 'แบ่งตามช่วงระยาเวลา'),
-            'eduYear' => Yii::t('app', 'ปีการศึกษา'),
-            'budgetYear' => Yii::t('app', 'ปีงบประมาณ'),
-            'year' => Yii::t('app', 'ปี พ.ศ.'),
-            'month' => Yii::t('app', 'เดือน'),
-            'assessment' => Yii::t('app', 'รอบประเมิน'),
+            'user_id' => Yii::t('andahrm/development', 'Person'),
+            'dev_project_id' => Yii::t('andahrm/development', 'Development Project'),
+            'dev_activity_char_id' => Yii::t('andahrm/development', 'Nature Activity'),
+            'detail' => Yii::t('andahrm/development', 'Detail'),
+            'start' => Yii::t('andahrm/development', 'Start'),
+            'end' => Yii::t('andahrm/development', 'End'),            
+            'rangeDate' => Yii::t('andahrm/development', 'Range Date'),
+            'explodeBy' => Yii::t('andahrm/development', 'By Period'),
+            'eduYear' => Yii::t('andahrm/development', 'Education Year'),
+            'budgetYear' => Yii::t('andahrm/development', 'Budget Year'),
+            'year' => Yii::t('andahrm/development', 'Year'),
+            'month' => Yii::t('andahrm/development', 'Month'),
+            'assessment' => Yii::t('andahrm/development', 'Assessment'),
         ];
     }
 
@@ -85,11 +85,11 @@ class DevelopmentPerson extends \yii\db\ActiveRecord {
     public static function itemsAlias($key) {
         $items = [
             'status' => [
-                0 => Yii::t('app', 'ร่าง'),
-                1 => Yii::t('app', 'เสนอ'),
-                2 => Yii::t('app', 'อนุมัติ'),
-                3 => Yii::t('app', 'ไม่อนุมัติ'),
-                4 => Yii::t('app', 'ยกเลิก'),
+                0 => Yii::t('andahrm/development', 'Draft'),
+                1 => Yii::t('andahrm/development', 'Offer'),
+                2 => Yii::t('andahrm/development', 'Approve'),
+                3 => Yii::t('andahrm/development', 'Not Allowed'),
+                4 => Yii::t('andahrm/development', 'Canceled'),
             ],
             'explodeBy' => [
                 1 => 'ปีการศึกษา',

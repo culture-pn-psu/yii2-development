@@ -10,7 +10,7 @@ use culturePnPsu\development\models\DevelopmentProject;
 /* @var $searchModel culturePnPsu\development\models\DevelopmentProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'จัดการโครงการพัฒนา');
+$this->title = Yii::t('andahrm/development', 'Management Development');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -94,16 +94,16 @@ $fullExportMenu = ExportMenu::widget([
             //'heading'=>'<h3 class="panel-title"><i class="fa fa-th"></i> '.Html::encode($this->title).'</h3>',
 //             'type'=>'primary',
             'before'=> '<div class="btn-group">'.
-                Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('app', 'Create'), ['create'], [
+                Html::a('<i class="glyphicon glyphicon-plus"></i> '.Yii::t('andahrm', 'Create'), ['create'], [
                     'class' => 'btn btn-success btn-flat',
                     'data-pjax' => 0
                 ]) . ' '.
-                Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('app', 'Reload'), '#!', [
+                Html::a('<i class="glyphicon glyphicon-repeat"></i> '.Yii::t('andahrm', 'Reload'), '#!', [
                     'class' => 'btn btn-info btn-flat btn-reload',
                     'title' => 'Reload',
                     'id' => 'btn-reload-grid'
                 ]) . ' '.
-                Html::a('<i class="glyphicon glyphicon-trash"></i> '.Yii::t('app', 'Trash'), ['trash/index'], [
+                Html::a('<i class="glyphicon glyphicon-trash"></i> '.Yii::t('andahrm', 'Trash'), ['trash/index'], [
                     'class' => 'btn btn-warning btn-flat',
                     'data-pjax' => 0
                 ]) . ' '.

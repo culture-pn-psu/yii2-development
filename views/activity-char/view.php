@@ -7,17 +7,17 @@ use yii\widgets\DetailView;
 /* @var $model culturePnPsu\development\models\DevelopmentActivityChar */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Activity Chars'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('andahrm/development', 'Development Activity Chars'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
         <p>
-            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('andahrm', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?=
-            Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            Html::a(Yii::t('andahrm', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('andahrm', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ])
