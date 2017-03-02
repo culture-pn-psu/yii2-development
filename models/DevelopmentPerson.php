@@ -5,6 +5,7 @@ namespace andahrm\development\models;
 use Yii;
 use andahrm\person\models\Person;
 use yii\helpers\ArrayHelper;
+use kuakling\datepicker\behaviors\DateBuddhistBehavior;
 
 /**
  * This is the model class for table "development_person".
@@ -25,6 +26,20 @@ class DevelopmentPerson extends \yii\db\ActiveRecord {
      */
     public static function tableName() {
         return 'development_person';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'start' => [
+                'class' => DateBuddhistBehavior::className(),
+                'dateAttribute' => 'start',
+            ],
+            'end' => [
+                'class' => DateBuddhistBehavior::className(),
+                'dateAttribute' => 'end',
+            ],
+        ];
     }
 
     /**
