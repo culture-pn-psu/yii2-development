@@ -17,18 +17,11 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
         "culture-pn-psu/yii2-core":"*"
     },
     "autoload": {
         "psr-4": {
             "culturePnPsu\\development\\": ""
-        }
-    },
-    "extra": {
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
         }
     }
 }
