@@ -5,6 +5,10 @@ namespace andahrm\development\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 use andahrm\person\models\Person;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use kuakling\datepicker\behaviors\DateBuddhistBehavior;
+use andahrm\setting\models\Helper;
 
 /**
  * This is the model class for table "development_activity_char".
@@ -33,6 +37,18 @@ class DevelopmentActivityChar extends \yii\db\ActiveRecord {
                 [['title'], 'required'],
                 [['created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
                 [['title'], 'string', 'max' => 45],
+        ];
+    }
+    
+    function behaviors()
+    {
+        return [ 
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+            ],
+            'blameable' => [
+                'class' => BlameableBehavior::className(),
+            ],
         ];
     }
 

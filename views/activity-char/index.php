@@ -25,7 +25,10 @@ $columns = [
         'value'=>'createdBy.fullname',
     ],
     'updated_at' => 'updated_at:datetime',
-    'updated_by' => 'updatedBy',
+    'updated_by' => [
+        'attribute'=>'updated_by',
+        'value'=>'updatedBy.fullname',
+    ],
 ];
 
 $gridColumns = [
@@ -33,6 +36,8 @@ $gridColumns = [
     $columns['title'],
     $columns['created_at'],
     $columns['created_by'],
+    $columns['updated_at'],
+    $columns['updated_by'],
     ['class' => '\kartik\grid\ActionColumn',]
 ];
 
