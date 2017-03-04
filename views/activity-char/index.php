@@ -20,7 +20,10 @@ $columns = [
     'id' => 'id',
     'title' => 'title',
     'created_at' => 'created_at:datetime',
-    'created_by' => 'createdBy',
+    'created_by' => [
+        'attribute'=>'created_by',
+        'value'=>'createdBy.fullname',
+    ],
     'updated_at' => 'updated_at:datetime',
     'updated_by' => 'updatedBy',
 ];
