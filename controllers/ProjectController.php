@@ -134,7 +134,7 @@ class ProjectController extends Controller {
     public function bindPerson($model, $mode = null, $user_id = null, $id = null) {
         $session = Yii::$app->session;
         $id = $model->isNewRecord ? 'new' : $id;
-        //$session->destroy('dev_project');
+        // $session->destroy('dev_project');
 //        echo "<pre>";
 //            print_r($session['dev_project']);
 //            echo "</pre><hr/>";
